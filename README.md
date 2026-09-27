@@ -19,6 +19,7 @@
 | [docs/01-全流程步骤.md](docs/01-全流程步骤.md) | 从剧本到成片的完整步骤 |
 | [docs/02-天书奇谈风格圣经.md](docs/02-天书奇谈风格圣经.md) | 视觉与叙事风格定义 |
 | [tools/下载清单.md](tools/下载清单.md) | 软件/模型下载核对表 |
+| [tools/同步下载清单-ComfyUI期间.md](tools/同步下载清单-ComfyUI期间.md) | **正在下 ComfyUI 时同步补什么** |
 | [prompts/](prompts/) | 出图与动画提示词模板 |
 
 **当前硬件路线：** RTX 4080 SUPER → 本机 ComfyUI 出图 + 可灵视频 + 本机剪辑。

@@ -30,9 +30,53 @@
 
 打开官方发布页（选 **NVIDIA** 版）：
 
-- Releases（latest / 最新稳定）：  
-  https://github.com/comfyanonymous/ComfyUI/releases  
-  或组织页：https://github.com/Comfy-Org/ComfyUI/releases
+- Releases：https://github.com/Comfy-Org/ComfyUI/releases  
+  （或 https://github.com/comfyanonymous/ComfyUI/releases ）
+
+**当前最新 NVIDIA 包直链示例（版本号会变，以 Releases 页为准）：**
+
+```text
+https://github.com/Comfy-Org/ComfyUI/releases/download/v0.37.0/ComfyUI_windows_portable_nvidia.7z
+```
+
+### 浏览器很慢 / 易断：改用命令行（推荐）
+
+1. 在浏览器下载列表里 **取消** 未完成的下载  
+2. 打开 **PowerShell** 或 **CMD**，先建目录：
+
+```bat
+mkdir D:\AI
+cd /d D:\AI
+```
+
+3. **方案 A：Windows 自带 curl（可断点续传）**
+
+```bat
+curl.exe -L --retry 99 --retry-all-errors -C - -o ComfyUI_windows_portable_nvidia.7z "https://github.com/Comfy-Org/ComfyUI/releases/download/v0.37.0/ComfyUI_windows_portable_nvidia.7z"
+```
+
+断了再执行同一条命令即可从断点续传（`-C -`）。
+
+4. **方案 B：aria2 多线程（通常比浏览器快很多）**
+
+先安装 aria2（https://github.com/aria2/aria2/releases），把 `aria2c.exe` 加入 PATH 或放在当前目录，然后：
+
+```bat
+aria2c -c -x 16 -s 16 -k 1M -o ComfyUI_windows_portable_nvidia.7z "https://github.com/Comfy-Org/ComfyUI/releases/download/v0.37.0/ComfyUI_windows_portable_nvidia.7z"
+```
+
+`-c` 断点续传，`-x 16 -s 16` 多连接。
+
+5. **GitHub 仍极慢时（国内常见）**  
+   可换镜像前缀后再下（镜像站点会变，失效就换一个）：
+
+```bat
+curl.exe -L --retry 99 --retry-all-errors -C - -o ComfyUI_windows_portable_nvidia.7z "https://ghfast.top/https://github.com/Comfy-Org/ComfyUI/releases/download/v0.37.0/ComfyUI_windows_portable_nvidia.7z"
+```
+
+或使用你常用的 GitHub 加速器 / 代理后再跑方案 A/B。
+
+下完用 7-Zip 看属性，大小应约 **1.8GB**（与发布页一致），再解压。
 
 **4080 SUPER 下载哪个：**
 

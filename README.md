@@ -8,7 +8,7 @@
 
 **阶段 0：环境与工具准备（优先完成）**
 
-当前卡点：**Qwen Image 2512 换模出首图** → 见 [docs/07-Qwen-Image2512换模出图.md](docs/07-Qwen-Image2512换模出图.md)。
+当前卡点：**手搭 Qwen 2512 出首图** → 见 [docs/08-手搭Qwen2512工作流.md](docs/08-手搭Qwen2512工作流.md)。
 
 先把软件、账号、硬件与素材库准备充分，再进入剧本与出图。
 
@@ -19,7 +19,8 @@
 | [docs/04-现有ComfyUI体检报告.md](docs/04-现有ComfyUI体检报告.md) | 对你当前 Photoshop 整合包的体检结论 |
 | [docs/05-升级最新ComfyUI.md](docs/05-升级最新ComfyUI.md) | **旁路新装最新便携包**（保留旧包） |
 | [docs/06-古卷残灯流程与工具分析.md](docs/06-古卷残灯流程与工具分析.md) | 对标 UP「古卷残灯」聊斋系列的流程/工具推断 |
-| [docs/07-Qwen-Image2512换模出图.md](docs/07-Qwen-Image2512换模出图.md) | **当前卡点**：Qwen 2512 模板换国漫/LoRA 与首图 |
+| [docs/07-Qwen-Image2512换模出图.md](docs/07-Qwen-Image2512换模出图.md) | 一体化模板换模（属性面板绕过） |
+| [docs/08-手搭Qwen2512工作流.md](docs/08-手搭Qwen2512工作流.md) | **不 Unpack：自己加节点手搭** |
 | [docs/01-全流程步骤.md](docs/01-全流程步骤.md) | 从剧本到成片的完整步骤 |
 | [docs/02-天书奇谈风格圣经.md](docs/02-天书奇谈风格圣经.md) | 视觉与叙事风格定义 |
 | [tools/下载清单.md](tools/下载清单.md) | 软件/模型下载核对表 |

@@ -1,153 +1,113 @@
-# Qwen Image 2512：换国漫底模 + 出第一张图
+# Qwen-Image 2512：现阶段可跑通的换模方法（修正版）
 
-适用：你已打开模板 **`Qwen Image 2512`**（**Node graph**，无 `API` 标签），画布上是**一体化节点**（左栏有 Model links，底部有 `unet_name` / `clip_name` / `vae_name` / LoRA）。
+> 适用：Unpack 之后出现 `Load Diffusion Model` / `Load CLIP` / `Load VAE` / `Load LoRA`，  
+> 但 **下拉点不开、只能接线**，小圆点右键也没有 Convert。
 
-官方参考：https://docs.comfy.org/tutorials/image/qwen/qwen-image-2512
-
----
-
-## 先说结论
-
-| 你现在的情况 | 要做什么 |
-|--------------|----------|
-| 国漫底模放在 `models\checkpoints\` | **不够**：2512 模板的 `unet_name` 只扫 `diffusion_models\` |
-| 模板是一体化节点 | **不用**再拖 `Load LoRA`；改节点里的下拉框即可 |
-| CLIP / VAE | **先保持官方默认**，不要换成 SDXL 那套 |
-| 第一次出图 | 先跑通官方/国漫 unet → 再换「美术电影」LoRA |
+这是新版前端 + 子图/控件的常见坑，**不是你操作错了**。不要再找 COMBO 节点硬连。
 
 ---
 
-## 1. 文件必须放到这些目录
+## 结论先说
 
-假设便携包在 `D:\AI\ComfyUI_windows_portable\`（按你实际路径改）：
+| 目标 | 现阶段正确做法 |
+|------|----------------|
+| 先出第一张天书奇谈风图 | **保留官方** `qwen_image_2512_fp8…` 作底；用 **属性面板** 把 LoRA 换成「美术电影」@0.8；改提示词后 Run |
+| 换国漫底模 | 用右侧 **Properties Panel** 填/选文件名；且文件必须在 `diffusion_models\` |
+| Liblib「国漫大模型」 | 未必能当 2512 的 diffusion 权重用；不通就放弃硬换 unet，**风格交给美术电影 LoRA** |
+
+官方模板本身认的是这些文件（见 [官方文档](https://docs.comfy.org/tutorials/image/qwen/qwen-image-2512)）：
 
 ```text
-ComfyUI\models\
-  diffusion_models\   ← 主模型（unet_name）
-  text_encoders\      ← 文本编码器（clip_name）
-  vae\                ← VAE（vae_name）
-  loras\              ← LoRA（节点底部 LoRA 下拉）
+models/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors
+models/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors
+models/vae/qwen_image_vae.safetensors
+models/loras/…（Lightning 或你的美术电影）
 ```
 
-### 你已下的「Qwen-国漫…」
-
-从 `checkpoints` **复制或移动**到：
-
-```text
-...\ComfyUI\models\diffusion_models\
-```
-
-资源管理器操作，或 CMD：
-
-```bat
-mkdir "D:\AI\ComfyUI_windows_portable\ComfyUI\models\diffusion_models" 2>nul
-copy /Y "D:\AI\ComfyUI_windows_portable\ComfyUI\models\checkpoints\你的国漫文件名.safetensors" "D:\AI\ComfyUI_windows_portable\ComfyUI\models\diffusion_models\"
-```
-
-（若 models 是联接到旧包的，改成联接目标里的同名路径。）
-
-### 官方配套件（`clip_name` / `vae_name` 下拉里没有时必下）
-
-| 文件 | 目录 |
-|------|------|
-| `qwen_2.5_vl_7b_fp8_scaled.safetensors` | `text_encoders\` |
-| `qwen_image_vae.safetensors` | `vae\` |
-| （可选）`qwen_image_2512_fp8_e4m3fn.safetensors` | `diffusion_models\` |
-| （可选加速）`Qwen-Image-Lightning-4steps-V1.0.safetensors` 或模板写的 2512 Lightning | `loras\` |
-
-模板左栏 **Model links** 可一键下；也可从 Hugging Face 的 Comfy-Org 拆件仓库下。
-
-**4080 SUPER 建议：** 官方底模用 **fp8**（`qwen_image_2512_fp8_e4m3fn`）；bf16 更吃显存，非必须。
+你截图里 **CLIP / VAE / 官方 fp8 已经对上了**——先别拆这条链。
 
 ---
 
-## 2. 打开正确模板（回顾）
+## 方法 A（推荐）：右侧属性面板改模型 / LoRA
 
-1. 浏览器 `http://127.0.0.1:8188`
-2. 左侧栏点 **Templates**
-3. 顶部筛选点 **`Node graph`**（不要停在 All）
-4. 搜索 `Qwen`
-5. 打开 **`Qwen Image 2512`**（有 Text to Image，**没有** `API`）
+社区对「子图里下拉选不了」的可行绕过：
 
-不要点：`Qwen Image 3.0 Pro…`（API 云端）。
+1. **左键单击**选中节点（例如 `Load LoRA` 或 `Load Diffusion Model`）  
+2. 打开右侧 **Properties / 属性面板**  
+   - 右键节点 → **Properties Panel**  
+   - 或点界面右侧栏 / 按常见快捷键打开属性  
+3. 在面板里找到模型名 / LoRA 名相关字段  
+4. **在面板里选择或粘贴完整文件名**（不要在画布下拉上死磕）
 
----
+### 你现在该改什么
 
-## 3. 在一体化节点里换模
+**`Load Diffusion Model`（可先不动）**
 
-从上往下改下拉框：
+- 保持：`qwen_image_2512_fp8_e4m3fn.safetensors`  
+- 只有当你确认国漫文件已在 `diffusion_models\` 且属性面板能选到时，再改国漫名  
 
-1. **`unet_name`**  
-   - 选你的 **Qwen-国漫…**（须已在 `diffusion_models`）  
-   - 列表没有 → 点界面刷新，或关黑窗口再开 `run_nvidia_gpu.bat`，浏览器 **Ctrl+F5**  
-   - 仍没有 → 文件不在该目录，或不是该模板认的扩散权重
+**`Load CLIP` / `Load VAE`**
 
-2. **`clip_name`**  
-   - 保持：`qwen_2.5_vl_7b_fp8_scaled.safetensors`
+- 一律保持官方，不要换  
 
-3. **`vae_name`**  
-   - 保持：`qwen_image_vae.safetensors`
+**`Load LoRA`（重点）**
 
-4. **LoRA（最下面一行）**  
-   - **第一次**：保留 Lightning / 或先不挂风格 LoRA，只求跑通  
-   - **第二次**：改成 **美术电影** LoRA（文件在 `loras\`），强度约 **0.8**（若有强度滑条）
+- 属性面板里把文件改成你的 **美术电影** `.safetensors`  
+- `strength_model` = **0.8**  
+- 第一次若怕翻车：先把 strength 设 **0** 跑通，再改 0.8、再换文件名  
 
-5. 大框提示词改成中文美影/聊斋句（见下）  
-6. 分辨率先用 **1328×1328**，通后再改 **1664×928（16:9）**  
-7. 点右上角蓝色 **Run**
+**提示词**
 
----
+- 在 Prompt 组的 `CLIP Text Encode` 里改中文美影句（或同样用属性面板改 text）
 
-## 4. 第一张测试提示词
-
-```text
-中国上影美影动画风格，天书奇谈气质，工笔勾线，平涂着色，
-聊斋狐女，冷青夜色，烛火，水墨远山，电影静帧
-```
-
-负面：
-
-```text
-写实照片，3D渲染，霓虹，现代都市，网红脸，模糊，水印
-```
-
-成功后存到：
-
-```text
-02-visual-bible/角色_狐女_定妆_qwen_v01.png
-```
-
-（本机工程目录若尚未克隆本仓库，先建同名文件夹即可。）
+然后点 **Run**。
 
 ---
 
-## 5. 若 `unet_name` 里始终没有国漫 / 一点就报错
+## 方法 B：键盘刷新模型列表后再试属性面板
 
-按优先级排查：
+模型是新拷进文件夹的时：
 
-| 现象 | 处理 |
-|------|------|
-| 下拉里没有国漫文件名 | 确认在 `diffusion_models\`，重启 ComfyUI + Ctrl+F5 |
-| 报找不到 clip / vae | 按第 1 节补官方 text_encoder + vae |
-| 报 key missing / unexpected / 不是 unet | 该「国漫」可能是 **整包 checkpoint** 或旧版 Qwen 权重，**不能**直接塞进 2512 的 unet 槽 |
-| 国漫不兼容 | `unet_name` 先选官方 **`qwen_image_2512_fp8_e4m3fn`**，风格靠提示词 + **美术电影 LoRA**；国漫文件先留着备用 |
+1. 确认文件在正确目录（见上）  
+2. 画布上按 **`R`** 刷新节点定义，或重启 `run_nvidia_gpu.bat`  
+3. 再回到方法 A 用属性面板选  
 
-把下面两样发助手即可精确定位：
-
-1. 国漫**完整文件名**（含 `.safetensors`）  
-2. 红字报错全文（或说明「下拉没有」）
+ComfyUI **不会**在运行中自动发现新文件。
 
 ---
 
-## 6. 今天执行清单
+## 方法 C：官方 JSON 重来一遍（画布已经拧巴时）
 
-1. [ ] 国漫文件已在 `models\diffusion_models\`
-2. [ ] `text_encoders\` 有 `qwen_2.5_vl_7b_fp8_scaled.safetensors`
-3. [ ] `vae\` 有 `qwen_image_vae.safetensors`
-4. [ ] `loras\` 有美术电影 LoRA（可选加速 Lightning）
-5. [ ] 打开 **Qwen Image 2512**（Node graph）
-6. [ ] `unet_name` 选国漫或官方 fp8；clip/vae 保持官方
-7. [ ] 先不加风格 LoRA 跑通 1328²
-8. [ ] 再挂美术电影 @0.8，出定妆候选
+1. 打开官方说明页的 Workflow JSON：  
+   https://docs.comfy.org/tutorials/image/qwen/qwen-image-2512  
+2. 把 JSON **拖进** ComfyUI 画布  
+3. 用模板自带 **Model links** 把缺的官方 fp8 / clip / vae 下齐  
+4. **不要 Unpack、不要从控件往外拖线**  
+5. 选中子图或内部节点 → **只通过右侧属性面板** 改 LoRA 为美术电影、改提示词  
+6. Run  
 
-完成后回：「Qwen 通了」或贴报错全文。
+---
+
+## 关于「国漫底模」要有心理预期
+
+- 2512 模板的 `Load Diffusion Model` 吃的是 **Qwen-Image 2512 扩散权重**（官方命名那套）  
+- Liblib 的「Qwen-国漫…大模型」若是另一套封装 / 旧版 Qwen / 整包 checkpoint，**放进 `checkpoints` 或硬塞 unet 都会选不了或一跑就报错**  
+- **可持续做法：**  
+  - 底：官方 `qwen_image_2512_fp8`  
+  - 风：美术电影 LoRA @0.8  
+  - 词：天书奇谈提示词 + refs 参考  
+
+等第一张图稳定后，再单独验证国漫是否出现在属性面板的模型列表里。
+
+---
+
+## 今天唯一验收标准
+
+1. [ ] `Load Diffusion Model` = 官方 fp8（已有即可）  
+2. [ ] CLIP / VAE = 官方（已有即可）  
+3. [ ] **属性面板** 把 LoRA 换成美术电影，强度 0.8（或先 0 跑通）  
+4. [ ] 提示词改成美影/聊斋  
+5. [ ] Run 出一张图  
+
+成功回：「属性面板通了」。  
+若属性面板里也没有 LoRA/模型列表：发 **Properties 面板截图** + 国漫/美术电影的**完整文件名**。

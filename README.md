@@ -15,6 +15,7 @@
 | [docs/00-环境与工具准备.md](docs/00-环境与工具准备.md) | **必读**：硬件、软件安装、账号、目录规范 |
 | [docs/03-RTX4080S本机安装手册.md](docs/03-RTX4080S本机安装手册.md) | **4080S 专用**：ComfyUI/模型/参数/验收 |
 | [docs/04-现有ComfyUI体检报告.md](docs/04-现有ComfyUI体检报告.md) | 对你当前 Photoshop 整合包的体检结论 |
+| [docs/05-升级最新ComfyUI.md](docs/05-升级最新ComfyUI.md) | **旁路新装最新便携包**（保留旧包） |
 | [docs/01-全流程步骤.md](docs/01-全流程步骤.md) | 从剧本到成片的完整步骤 |
 | [docs/02-天书奇谈风格圣经.md](docs/02-天书奇谈风格圣经.md) | 视觉与叙事风格定义 |
 | [tools/下载清单.md](tools/下载清单.md) | 软件/模型下载核对表 |

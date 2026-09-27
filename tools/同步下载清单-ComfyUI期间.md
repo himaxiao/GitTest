@@ -27,9 +27,13 @@ ComfyUI 便携包下完并解压后，按下面顺序补齐。打勾即过。
 
 | 状态 | 文件 | 目录 | 说明 |
 |------|------|------|------|
-| [ ] | **SDXL 插画/国风底模 ×1** | `checkpoints\` | 正片主力；不要用写实 `maginMixReal` |
-| [ ] | **水墨 或 工笔 LoRA ×1** | `loras\` | Liblib/Civitai 搜：水墨、工笔、国风 |
-| [ ] | SDXL VAE（若底模说明需要） | `vae\` | 很多 SDXL 已内嵌，按说明 |
+| [ ] | **Qwen 国漫底模**（你已下） | **`diffusion_models\`**（不要只放 `checkpoints\`） | `Qwen Image 2512` 模板的 `unet_name` 只认这里 |
+| [ ] | **Qwen 文本编码器** `qwen_2.5_vl_7b_fp8_scaled.safetensors` | `text_encoders\` | 模板 `clip_name`；缺则无法跑 |
+| [ ] | **Qwen VAE** `qwen_image_vae.safetensors` | `vae\` | 模板 `vae_name` |
+| [ ] | （可选）官方 `qwen_image_2512_fp8_e4m3fn.safetensors` | `diffusion_models\` | 国漫不兼容时的保底底模 |
+| [ ] | **美术电影 / 美影风 LoRA** | `loras\` | 一体化节点底部 LoRA 下拉；强度约 0.8 |
+| [ ] | **SDXL 插画/国风底模 ×1**（备线） | `checkpoints\` | 非 Qwen 工作流备用；不要用写实 `maginMixReal` |
+| [ ] | **水墨 或 工笔 LoRA ×1**（备线） | `loras\` | SDXL 路线用 |
 
 **可稍后（定妆稳定后再下）：**
 
@@ -81,10 +85,12 @@ ComfyUI 便携包下完并解压后，按下面顺序补齐。打勾即过。
 2. 更新显卡驱动（若很久没更）
 3. 装 Git、FFmpeg、剪映、Audacity
 4. 启动新 ComfyUI → 装 Manager + 三个插件
-5. 下载 SDXL 国风底模 + 水墨/工笔 LoRA
-6. 出一张 16:9 冒烟图
+5. 把 Qwen 国漫挪到 `diffusion_models\`，补齐 text_encoder + vae
+6. 打开 Templates → Node graph → **Qwen Image 2512**，按 `docs/07-Qwen-Image2512换模出图.md` 出首图
 7. 注册可灵（明天再深度用也行）
 ```
+
+Qwen 换模细节见：`docs/07-Qwen-Image2512换模出图.md`
 
 ---
 

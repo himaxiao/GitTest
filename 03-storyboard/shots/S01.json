@@ -1,0 +1,41 @@
+{
+  "shot_id": "S01",
+  "version": "v01",
+  "duration_sec": 8,
+  "aspect": "16:9",
+  "gate": "ready_for_still",
+  "identity_lock": "聊斋狐女青凤设定本镜可不出现正脸；若有人影极小，青绿袍剪影即可",
+  "style_lock": "中国上影美影动画风格，天书奇谈气质，工笔勾线，平涂着色，冷青夜色，电影静帧，16:9",
+  "framing": "wide shot, abandoned Chinese courtyard gate at night",
+  "picture_one_liner": "破旧柴扉半掩，枯枝雾气，远山如墨，冷青月光，空镜无人物特写",
+  "motion_grade": "A",
+  "motion_allowed": ["light mist drift", "almost static frame"],
+  "motion_forbidden": ["camera shake", "walking character", "face close-up", "rapid zoom"],
+  "still": {
+    "mode": "t2i",
+    "workflow": "qwen_t2i_handbuild",
+    "positive": "wide shot, abandoned Chinese courtyard gate at night, 破旧柴扉半掩，枯枝雾气，远山如墨，冷青月光，空镜无人物特写，empty courtyard, no face, 中国上影美影动画风格，天书奇谈气质，工笔勾线，平涂着色，冷青夜色，电影静帧，16:9",
+    "negative": "photorealistic, 3d, modern building, readable text, watermark, close-up face, crowded people",
+    "width": 1664,
+    "height": 928,
+    "batch": 4,
+    "max_tries": 4,
+    "output_path": "04-keyframes/KF_S01_荒园夜门_v01.png"
+  },
+  "video": {
+    "mode": "i2v",
+    "workflow": "wan22_i2v_stable",
+    "first_frame": "04-keyframes/KF_S01_荒园夜门_v01.png",
+    "positive": "same image as first frame, keep composition, only light mist drifting, almost static, no camera shake, no walking character, no face morph",
+    "negative": "camera shake, face morph, warped architecture, sudden zoom, running",
+    "length_frames": 49,
+    "width": 832,
+    "height": 480,
+    "max_tries": 3,
+    "output_path": "05-animation/AN_S01_v01.mp4"
+  },
+  "audio": {
+    "narration": "耿生夜过荒园，闻笑语切切。",
+    "sfx": ["night wind", "distant soft laugh"]
+  }
+}

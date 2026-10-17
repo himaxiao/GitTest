@@ -1,0 +1,42 @@
+{
+  "shot_id": "S03",
+  "version": "v01",
+  "duration_sec": 14,
+  "aspect": "16:9",
+  "gate": "ready_for_still",
+  "identity_lock": "聊斋狐女青凤，雪白肤，圆粉腮，粉眼影，朱红小口，黑发刘海高髻，粉花绿叶发饰，绿珠红坠耳饰，青绿长袍，深蓝云纹领，红绦腰结",
+  "style_lock": "中国上影美影动画风格，天书奇谈气质，工笔勾线，平涂着色，冷青夜色，电影静帧，16:9",
+  "framing": "medium shot, three-quarter view, half body beside candle",
+  "picture_one_liner": "狐女立于烛侧，神情安静，烛火在身侧，冷青远山虚化",
+  "motion_grade": "A",
+  "motion_allowed": ["candle flame flicker", "optional extremely subtle sleeve flutter"],
+  "motion_forbidden": ["blink exaggerated", "mouth open", "head turn", "walk", "camera push-in shake", "face morph"],
+  "still": {
+    "mode": "t2i_or_use_lookbook",
+    "workflow": "qwen_t2i_handbuild",
+    "positive": "medium shot, three-quarter view, half body beside candle, 狐女立于烛侧，神情安静，烛火在身侧，冷青远山虚化，聊斋狐女青凤，雪白肤，圆粉腮，粉眼影，朱红小口，黑发刘海高髻，粉花绿叶发饰，绿珠红坠耳饰，青绿长袍，深蓝云纹领，红绦腰结，中国上影美影动画风格，天书奇谈气质，工笔勾线，平涂着色，冷青夜色，电影静帧，16:9",
+    "negative": "photorealistic, 3d, heavy shadow, zigzag purple collar if using cloud-collar version mismatch, text, watermark, full body crop error",
+    "width": 1664,
+    "height": 928,
+    "batch": 4,
+    "max_tries": 4,
+    "output_path": "04-keyframes/KF_S03_狐女定妆_v01.png",
+    "notes": "优先使用已过审定妆/全身横图裁切或复用 CHAR 横构图，再回填路径"
+  },
+  "video": {
+    "mode": "i2v",
+    "workflow": "wan22_i2v_stable",
+    "first_frame": "04-keyframes/KF_S03_狐女定妆_v01.png",
+    "positive": "same image as first frame, keep face and costume locked, only candle flame flickering, optional extremely subtle sleeve flutter, no head turn, no expression morph, static camera",
+    "negative": "face morph, grotesque expression, camera shake, walking, lip sync, abrupt turn",
+    "length_frames": 49,
+    "width": 832,
+    "height": 480,
+    "max_tries": 3,
+    "output_path": "05-animation/AN_S03_v01.mp4"
+  },
+  "audio": {
+    "narration": "有女在侧，绰约若仙，而不类人间温软。",
+    "sfx": ["candle", "laugh cuts off at end"]
+  }
+}

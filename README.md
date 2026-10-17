@@ -11,7 +11,8 @@
 1. **试片轨**：Qwen 关键帧 → Wan2.2 微动 → 剪辑（《青凤》4 镜）  
 2. **架构轨**：远期分层管线框架已立项 → [docs/14-远期管线架构总纲.md](docs/14-远期管线架构总纲.md)
 
-桌面端 Comfy 模型关联 → [docs/15-ComfyDesktop迁移与模型关联.md](docs/15-ComfyDesktop迁移与模型关联.md)
+桌面端 Comfy 模型关联 → [docs/15-ComfyDesktop迁移与模型关联.md](docs/15-ComfyDesktop迁移与模型关联.md)  
+从试错到稳产 → [docs/16-本地稳定产出节奏与门禁.md](docs/16-本地稳定产出节奏与门禁.md)
 
 | 文档 | 内容 |
 |------|------|
